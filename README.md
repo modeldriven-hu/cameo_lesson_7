@@ -1,10 +1,6 @@
-# Cameo/MagicDraw plugin development - Lesson 3
+# Cameo/MagicDraw plugin development - Lesson 7
 
-This is the third lesson of the series. In this lesson we will learn how to work with model elements.p
-
-Reference documentation:
-
-* https://docs.nomagic.com/display/MD2021xR2/Invoking+actions
+This is the seventh lesson of the series. The topic is debuggability and testability.
 
 # Requirements
 
@@ -16,7 +12,7 @@ Reference documentation:
 
 ## Check out the repository
 
-`git clone https://github.com/modeldriven-hu/cameo_lesson_2.git`
+`git clone https://github.com/modeldriven-hu/cameo_lesson_7.git`
 
 ## Configure environment variable
 
