@@ -38,17 +38,6 @@ public class ModelStructureGenerator {
 
     private void createModelElements(Package parentPackage) throws ReadOnlyElementException {
         var firstClass = createClass(parentPackage, "First class");
-
-        addProperty(firstClass);
-        addOperation(firstClass);
-
-        var enumeration = createEnumeration(parentPackage);
-
-        var secondClass = createClass(parentPackage, "Second class");
-        addStereotype(secondClass);
-        addEnumeration(secondClass, enumeration);
-
-        createRelation(parentPackage, firstClass, secondClass);
     }
 
     private Class createClass(Package parentPackage, String name) throws ReadOnlyElementException {
@@ -58,72 +47,6 @@ public class ModelStructureGenerator {
         manager.addElement(mdClass, parentPackage);
 
         return mdClass;
-    }
-
-    private void addProperty(Class mdClass) throws ReadOnlyElementException {
-
-        var stringType = (Type) Finder.byQualifiedName()
-                .find(project, "UML Standard Profile::UML2 Metamodel::PrimitiveTypes::String");
-
-        var property = factory.createPropertyInstance();
-        property.setName("myProperty");
-        property.setType(stringType);
-        CoreHelper.setMultiplicity(0, 1, property);
-
-        manager.addElement(property, mdClass);
-    }
-
-    private void addOperation(Class mdClass) throws ReadOnlyElementException {
-        var operation = factory.createOperationInstance();
-        operation.setName("myOperation");
-        manager.addElement(operation, mdClass);
-    }
-
-    private void addStereotype(Class mdClass) throws ReadOnlyElementException {
-        var profile = StereotypesHelper.getProfile(project, "My profile");
-        var stereotype = StereotypesHelper.getStereotype(project, "myStereotype", profile);
-
-        StereotypesHelper.addStereotype(mdClass, stereotype);
-        StereotypesHelper.setStereotypePropertyValue(mdClass, stereotype, "name", "hello");
-    }
-
-    private void createRelation(Package parentPackage, Class firstClass, Class secondClass) throws ReadOnlyElementException {
-        var dependency = factory.createDependencyInstance();
-        CoreHelper.setSupplierElement(dependency, firstClass);
-        CoreHelper.setClientElement(dependency, secondClass);
-        manager.addElement(dependency, parentPackage);
-    }
-
-    private Enumeration createEnumeration(Package parentPackage) throws ReadOnlyElementException {
-        var myEnum = factory.createEnumerationInstance();
-        myEnum.setName("My enumeration");
-
-        var values = new String[]{"a", "b", "c"};
-
-        for (var value : values){
-            var literal = factory.createEnumerationLiteralInstance();
-
-            var valueSpecification = factory.createLiteralStringInstance();
-            valueSpecification.setValue(value);
-
-            literal.setSpecification(valueSpecification);
-            literal.setName(value);
-
-            literal.setEnumeration(myEnum);
-        }
-
-        manager.addElement(myEnum, parentPackage);
-
-        return myEnum;
-    }
-
-    private void addEnumeration(Class mdClass, Enumeration enumeration) throws ReadOnlyElementException {
-        var property = factory.createPropertyInstance();
-        property.setName("myEnumeration");
-        property.setType(enumeration);
-        CoreHelper.setMultiplicity(1, 1, property);
-
-        manager.addElement(property, mdClass);
     }
 
 }
