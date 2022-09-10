@@ -2,27 +2,28 @@ package hu.modeldriven.cameo;
 
 import com.nomagic.magicdraw.core.Application;
 import com.nomagic.magicdraw.core.Project;
-import com.nomagic.magicdraw.openapi.uml.SessionManager;
 import com.nomagic.magicdraw.tests.MagicDrawTestRunner;
-import com.nomagic.magicdraw.uml.ConvertElementInfo;
-import com.nomagic.magicdraw.uml.Refactoring;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
-import com.nomagic.uml2.ext.magicdraw.components.mdbasiccomponents.Component;
+import org.assertj.swing.edt.GuiActionRunner;
+import org.assertj.swing.fixture.FrameFixture;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.awt.*;
 
-@RunWith(MagicDrawTestRunner.class)
+//@RunWith(MagicDrawTestRunner.class)
 public class MyTest {
 
     private static Project project;
 
     @BeforeClass
-    public static void createProject() {
-        project = Application.getInstance().getProjectsManager().createProject();
+    public static void createProject()  {
+        try {
+            var main = new MagicDrawTestRunner(MyTest.class);
+            project = Application.getInstance().getProjectsManager().createProject();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public static void closeProject() {
@@ -32,26 +33,16 @@ public class MyTest {
 
     @Test
     public void testSomething() throws Exception {
-        var classInstance = createClass("A");
-        var info = new ConvertElementInfo(Component.class);
-        info.setPreserveElementID(true);
-        String oldId = classInstance.getID();
+        var frame = GuiActionRunner.execute(() ->new SimpleCopyApplication());
+        var window = new FrameFixture(frame);
+        window.show();
+        window.moveTo(new Point(200, 200));
+        window.button("myButton").click();
+        var label = window.label("myLabel").text();
 
-        SessionManager.getInstance().createSession(project, "convert to component");
-        Element converted = Refactoring.Converting.convert(classInstance, info);
-        SessionManager.getInstance().closeSession(project);
+        Assert.assertEquals("Random gibberish", label);
 
-        assertTrue(converted instanceof Component);
-        assertEquals(oldId, converted.getID());
-    }
-
-    private static Element createClass(String name) {
-        SessionManager.getInstance().createSession(project, "create class " + name);
-        var classInstance = project.getElementsFactory().createClassInstance();
-        classInstance.setOwner(project.getPrimaryModel());
-        classInstance.setName(name);
-        SessionManager.getInstance().closeSession(project);
-        return classInstance;
+        System.out.println("And we wait");
     }
 
 }
