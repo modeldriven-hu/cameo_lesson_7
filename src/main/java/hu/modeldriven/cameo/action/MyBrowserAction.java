@@ -5,15 +5,15 @@ import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Package;
 
 import java.awt.event.ActionEvent;
 
-public class BrowserAction extends DefaultBrowserAction {
+public class MyBrowserAction extends DefaultBrowserAction {
 
-    public BrowserAction(String id, String name) {
+    public MyBrowserAction(String id, String name) {
         super(id, name, null, null);
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        var tree = getTree();
+        var tree = getTreeOrActiveTree();
 
         var selectedNode = tree.getSelectedNode();
 

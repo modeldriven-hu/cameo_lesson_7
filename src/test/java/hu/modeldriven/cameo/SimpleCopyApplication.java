@@ -7,15 +7,19 @@ import java.lang.reflect.InvocationTargetException;
 public class SimpleCopyApplication extends JFrame {
     private static final long serialVersionUID = 1L;
 
+    private JLabel label;
+
     public SimpleCopyApplication() {
         setLayout(new FlowLayout());
 
         final JTextField textField = new JTextField("");
         textField.setText("Random gibberish");
+
         JButton button = new JButton("Copy");
         button.setName("myButton");
-        final JLabel label = new JLabel("");
-        label.setName("myLabel");
+
+        this.label = new JLabel("");
+        this.label.setName("myLabel");
 
         button.addActionListener((event) -> label.setText(textField.getText()));
 
@@ -24,6 +28,10 @@ public class SimpleCopyApplication extends JFrame {
         add(label);
 
         pack();
+    }
+
+    public void setData(WhateverRecord whateverRecord){
+        this.label.setText(whateverRecord.getName());
     }
 
     public static void main(String[] args) throws InvocationTargetException, InterruptedException {

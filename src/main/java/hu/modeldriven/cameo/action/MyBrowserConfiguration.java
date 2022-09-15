@@ -5,11 +5,11 @@ import com.nomagic.magicdraw.actions.BrowserContextAMConfigurator;
 import com.nomagic.magicdraw.actions.MDActionsCategory;
 import com.nomagic.magicdraw.ui.browser.Tree;
 
-public class BrowserConfiguration implements BrowserContextAMConfigurator {
+public class MyBrowserConfiguration implements BrowserContextAMConfigurator {
 
-    private final BrowserAction browserAction;
+    private final MyBrowserAction browserAction;
 
-    public BrowserConfiguration(BrowserAction browserAction) {
+    public MyBrowserConfiguration(MyBrowserAction browserAction) {
         this.browserAction = browserAction;
     }
 

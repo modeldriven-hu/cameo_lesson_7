@@ -2,8 +2,8 @@ package hu.modeldriven.cameo;
 
 import com.nomagic.magicdraw.actions.ActionsConfiguratorsManager;
 import com.nomagic.magicdraw.plugins.Plugin;
-import hu.modeldriven.cameo.action.BrowserAction;
-import hu.modeldriven.cameo.action.BrowserConfiguration;
+import hu.modeldriven.cameo.action.MyBrowserAction;
+import hu.modeldriven.cameo.action.MyBrowserConfiguration;
 
 public class Lesson7Plugin extends Plugin {
 
@@ -13,8 +13,8 @@ public class Lesson7Plugin extends Plugin {
     }
 
     private void createBrowserAction() {
-        var action = new BrowserAction("Lesson7BrowserAction", "Lesson 7 Browser action");
-        var browserConfiguration = new BrowserConfiguration(action);
+        var action = new MyBrowserAction("Lesson7BrowserAction", "Lesson 7 Browser action");
+        var browserConfiguration = new MyBrowserConfiguration(action);
         ActionsConfiguratorsManager.getInstance().addContainmentBrowserContextConfigurator(browserConfiguration);
     }
 
